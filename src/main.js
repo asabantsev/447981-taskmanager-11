@@ -1,4 +1,4 @@
-"use srtict";
+'use srtict';
 
 const TASK_COUNT = 3;
 
