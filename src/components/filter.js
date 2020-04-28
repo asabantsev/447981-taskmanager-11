@@ -1,4 +1,4 @@
-import {createElement} from "../utils.js";
+import {createElement} from '../utils.js';
 
 const createFilterMarkup = (filter, isChecked) => {
   const {name, count} = filter;
