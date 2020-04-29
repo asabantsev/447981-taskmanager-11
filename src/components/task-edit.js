@@ -1,5 +1,6 @@
-import {COLORS, DAYS, MONTH_NAMES} from "../const.js";
-import {formatTime} from "../utils.js";
+import {COLORS, DAYS, MONTH_NAMES} from '../const.js';
+import {createElement, formatTime} from '../utils.js';
+
 
 const createColorsMarkup = (colors, currentColor) => {
   return colors
@@ -44,7 +45,7 @@ const createRepeatingDaysMarkup = (days, repeatingDays) => {
    .join(`\n`);
 };
 
-export const createTaskEditTemplate = (task) => {
+const createTaskEditTemplate = (task) => {
   const {description, dueDate, color, repeatingDays} = task;
 
   const isExpired = dueDate instanceof Date && dueDate < Date.now();
@@ -87,8 +88,7 @@ export const createTaskEditTemplate = (task) => {
                   date: <span class="card__date-status">${isDateShowing ? `yes` : `no`}</span>
                 </button>
 
-                ${isDateShowing ? `
-                  <fieldset class="card__date-deadline">
+                ${isDateShowing ? `<fieldset class="card__date-deadline">
                     <label class="card__input-deadline-wrap">
                       <input
                         class="card__date"
@@ -98,20 +98,17 @@ export const createTaskEditTemplate = (task) => {
                         value="${date} ${time}"
                       />
                     </label>
-                  </fieldset>
-                  ` : ``}
+                  </fieldset>` : ``}
 
                 <button class="card__repeat-toggle" type="button">
                   repeat:<span class="card__repeat-status">${isRepeatingTask ? `yes` : `no`}</span>
                 </button>
 
-                ${isRepeatingTask ? `
-                  <fieldset class="card__repeat-days">
+                ${isRepeatingTask ? `<fieldset class="card__repeat-days">
                     <div class="card__repeat-days-inner">
                       ${repeatingDaysMarkup}
                     </div>
-                  </fieldset>
-                  ` : ``}
+                  </fieldset>` : ``}
               </div>
             </div>
 
@@ -132,3 +129,26 @@ export const createTaskEditTemplate = (task) => {
     </article>`
   );
 };
+
+export default class TaskEdit {
+  constructor(task) {
+    this._task = task;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTaskEditTemplate(this._task);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
