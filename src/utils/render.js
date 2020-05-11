@@ -10,13 +10,22 @@ export const createElement = (template) => {
   return newElement.firstChild;
 };
 
+const RenderPositionCase = {
+  afterbegin: (container, component) => {
+    container.prepend(component.getElement());
+  },
+  beforeend: (container, component) => {
+    container.append(component.getElement());
+  },
+};
+
 export const render = (container, component, place) => {
   switch (place) {
     case RenderPosition.AFTERBEGIN:
-      container.prepend(component.getElement());
+      RenderPositionCase.afterbegin(container, component);
       break;
     case RenderPosition.BEFOREEND:
-      container.append(component.getElement());
+      RenderPositionCase.beforeend(container, component);
       break;
   }
 };

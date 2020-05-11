@@ -1,9 +1,12 @@
+const LESSTEN = 10;
+const TWENTYFOUR = 24;
+
 const castTimeFormat = (value) => {
-  return value < 10 ? `0${value}` : String(value);
+  return value < LESSTEN ? `0${value}` : String(value);
 };
 
 export const formatTime = (date) => {
-  const hours = castTimeFormat(date.getHours() % 24);
+  const hours = castTimeFormat(date.getHours() % TWENTYFOUR);
   const minutes = castTimeFormat(date.getMinutes());
 
   return `${hours}:${minutes}`;
